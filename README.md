@@ -6,6 +6,7 @@ This repository contains a **Report** for the Advanced Topics in Networks* cours
 
 ## 📁 Repository Structure
 ├── config-files/    # IPsec/router/client configuration files used in the experiments
+|
 └── report-tar.pdf       # Full experimental report
 
 ### 🎯 Objectives
