@@ -1,0 +1,14 @@
+sudo ip addr add 10.0.23.1/24 dev ens3
+sudo ip link set ens3 up
+sudo ip route add default via 10.0.23.2
+
+
+/etc/vpnc/corporate.conf
+
+
+IPSec gateway 10.0.12.1
+IPSec ID TAR_VPN_GROUP
+IPSec  secret TAR_KEY_2026
+Xauth username tarteste
+Xauth password tar2026
+Enable weak encryption

@@ -1,0 +1,48 @@
+sudo ip addr add 10.0.23.1/24 dev ens3
+sudo ip link set ens3 up
+sudo ip route add default via 10.0.23.2
+
+
+Instalar o certificado
+
+sudo cp ~/ca-cert.pem /etc/strongswan/private/x509ca/
+
+/etc/strongswan/swanctl/swanctl.conf
+
+connections {
+    vpn-cliente {
+        # IP local do RemotePC
+        local_addrs  = 10.0.23.1
+        # IP WAN do GWCorp
+        remote_addrs = 10.0.12.1
+
+        local {
+            auth = eap
+            eap_id = remoteuser
+        }
+        remote {
+            auth = pubkey
+            id = 10.0.12.1
+        }
+
+        children {
+            vpn-cliente {
+                remote_ts = 10.0.11.0/24    # Rede corporativa
+                local_ts  = dynamic          # IP da pool
+                esp_proposals = aes256-sha256-modp2048
+                mode = tunnel
+            }
+        }
+
+        version = 2
+        proposals = aes256-sha256-modp2048
+        vips = 0.0.0.0                       # Pede IP à pool do servidor
+    }
+}
+
+secrets {
+    eap-remoteuser {
+        id = tarteste
+        secret = "tar2026"       # Mesma do servidor
+    }
+}
